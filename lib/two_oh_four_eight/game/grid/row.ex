@@ -1,7 +1,7 @@
 defmodule TwoOhFourEight.Game.Grid.Row do
   # A chunk is an obstacle-free section of row.
   defmodule Chunk do
-    def shift(chunk) do
+    def shift_left(chunk) do
       original_length = length(chunk)
 
       chunk
@@ -45,10 +45,10 @@ defmodule TwoOhFourEight.Game.Grid.Row do
   # We only define a leftward shift; all other grid moves are performed by
   # flipping and/or transposing the grid, shifting left then flipping/
   # transposing back.
-  def shift(row) do
+  def shift_left(row) do
     row
     |> split()
-    |> Enum.map(&Chunk.shift/1)
+    |> Enum.map(&Chunk.shift_left/1)
     |> Enum.intersperse([@obstacle])
     |> List.flatten()
   end
