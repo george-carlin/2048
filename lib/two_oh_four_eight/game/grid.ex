@@ -22,6 +22,30 @@ defmodule TwoOhFourEight.Game.Grid do
     end
   end
 
+  @doc """
+    iex> Grid.can_shift?([[1,0],[0,0]])
+    true
+    iex> Grid.can_shift?([[1,2],[3,4]])
+    false
+  """
+  def can_shift?(grid) do
+    Enum.any?([:up, :down, :left, :right], fn dir ->
+      shift(grid, dir) != grid
+    end)
+  end
+
+  @doc """
+    iex> Grid.won?([[0,0],[0,2048]],2048)
+    true
+    iex> Grid.won?([[0,0],[0,1024]],2048)
+    false
+  """
+  def won?(grid, target) do
+    Enum.any?(grid, fn row ->
+      Enum.any?(row, & &1 >= target)
+    end)
+  end
+
   # Add a tile with value 'value' to a random empty cell.
   # (Assumes an empty cell can be found.)
   def add_random(grid, value) do
@@ -30,8 +54,8 @@ defmodule TwoOhFourEight.Game.Grid do
   end
 
   defp find_empty_square(grid) do
-    x = :random.uniform(@size - 1)
-    y = :random.uniform(@size - 1)
+    x = :random.uniform(length(grid) - 1)
+    y = :random.uniform(length(grid) - 1)
     if (grid |> Enum.at(y) |> Enum.at(x)) == 0 do
       {x, y}
     else
@@ -50,7 +74,7 @@ defmodule TwoOhFourEight.Game.Grid do
     new_row = Enum.at(grid, y) |> List.replace_at(x, value)
     List.replace_at(grid, y, new_row)
   end
-  
+
   def shift(grid, :left) do
     Enum.map(grid, &shift_row/1)
   end
@@ -85,8 +109,8 @@ defmodule TwoOhFourEight.Game.Grid do
 
   # Shift all tiles to the left without merging
   defp compact_row(row) do
-    compacted = for tile <- row, tile > 0, do: tile 
-    compacted ++ zeroes(@size - length(compacted))
+    compacted = for tile <- row, tile > 0, do: tile
+    compacted ++ zeroes(length(row) - length(compacted))
   end
 
   defp zeroes(num) do
