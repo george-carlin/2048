@@ -49,19 +49,29 @@ defmodule TwoOhFourEight.Game.Grid do
   # Add a tile with value 'value' to a random empty cell.
   # (Assumes an empty cell can be found.)
   def add_random(grid, value) do
-    {x, y} = find_empty_square(grid)
-    insert_at(grid, {x, y}, value)
+    case find_empty_squares(grid) do
+      [] -> nil # TODO handle error
+      coords ->
+        {x, y} = Enum.at(
+          coords,
+          :random.uniform(length(coords)) - 1
+        )
+        insert_at(grid, {x, y}, value)
+    end
   end
 
-  # NB this will loop infinitely if the grid has no empty squares
-  defp find_empty_square(grid) do
-    x = :random.uniform(length(grid)) - 1
-    y = :random.uniform(length(grid)) - 1
-    if (grid |> Enum.at(y) |> Enum.at(x)) == 0 do
-      {x, y}
-    else
-      find_empty_square(grid)
-    end
+  # Returns list of coordinates of all empty squares
+  defp find_empty_squares(grid) do
+    grid
+    |> Enum.with_index()
+    |> Enum.flat_map(fn {row, y} ->
+      row
+      |> Enum.with_index()
+      |> Enum.reduce([], fn
+        {0, x}, acc -> [{x, y} | acc]
+        {_, _}, acc -> acc
+      end)
+    end)
   end
 
   @doc """
