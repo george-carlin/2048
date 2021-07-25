@@ -12,7 +12,12 @@ defmodule TwoOhFourEightWeb.GameView do
   end
 
   def tile_inner_html_class(value, {x,y}, %Game{newest_tile: {newX, newY}}) do
-    val_class = if value <= 2048, do: value, else: "super"
-    "tile-inner tile-inner-#{val_class} #{if {x,y} == {newX,newY}, do: "tile-inner-newest"}"
+    val_class =
+      case value do
+        n when n < 0 -> "tile-inner-obstacle obstacle-#{abs(n)}"
+        n when n > 2048 -> "tile-inner-super"
+        n -> "tile-inner-#{n}"
+      end
+    "tile-inner #{val_class} #{if {x,y} == {newX,newY}, do: "tile-inner-newest"}"
   end
 end

@@ -1,10 +1,16 @@
 defmodule TwoOhFourEight.Game.Game do
-  defstruct [target: 2048, grid: nil, status: :in_play, newest_tile: {-1, -1}]
+  defstruct [
+    target: 2048,
+    grid: nil,
+    status: :in_play,
+    newest_tile: {-1, -1},
+    obstacles: 0
+  ]
 
   alias TwoOhFourEight.Game.Grid
 
   def new() do
-    {grid, newest_tile} = Grid.new() |> Grid.add_tile(2)
+    {grid, newest_tile} = Grid.new(obstacles: 4) |> Grid.add_tile(2)
     %__MODULE__{
       grid: grid,
       newest_tile: newest_tile

@@ -1,31 +1,22 @@
 defmodule TwoOhFourEight.Game.Grid do
   @size 6
 
-  @doc """
-    returns an empty sizeXsize grid
+  # Empty squares have value 0. Each obstacle has a unique negative value.
+  # Obstacle values are unique to make it easier to style each object different
+  # on the frontend.
 
-      iex> Grid.new()
-      [
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0]
-      ]
-  """
   def new(opts \\ []) do
     num_obstacles = Keyword.get(opts, :obstacles, 0)
 
     obstacle_coords =
-      0..(@size-1)
+      0..((@size*@size)-1)
       |> Enum.take_random(num_obstacles)
       |> Enum.map(fn n -> {div(n, @size), rem(n, @size)} end)
 
     for y <- 0..(@size-1) do
       for x <- 0..(@size-1) do
         if {x,y} in obstacle_coords do
-          -1
+          -(Enum.find_index(obstacle_coords, & &1 == {x, y}) + 1)
         else
           0
         end
