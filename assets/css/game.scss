@@ -1,0 +1,121 @@
+.grid {
+  display: flex;
+  justify-content: center;
+
+  &-body {
+    background: #bbada0;
+    width: max-content;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  &-row {
+    display: flex;
+  }
+}
+
+// tile color scheme stolen from play2048.co :)
+$bgColor2: #eee4da;;
+$bgColor4: #eee1c9;
+$bgColor8: #f3b27a;
+$bgColor16: #f69664;
+$bgColor32: #f77c5f;
+$bgColor64: #f75f3b;
+$bgColor128: #edd073;
+$bgColor256: #edcc62;
+$bgColor512: #edc950;
+$bgColor1024: #edc53f;
+$bgColor2048: #edc22e;
+$bgColorSuper: #3c3a33;
+
+$textColorVLight: #f9f6f2;
+$textColorLight: #776e65;
+$textColorDark: #f9f6f2;
+
+.tile {
+  height: 80px;
+  width: 80px;
+  background: rgba(238, 228, 218, 0.35);
+  border-radius: 2px;
+  margin: 3px;
+  display: flex;
+  font-size: 35px;
+  font-weight: 700;
+  color: $textColorDark;
+
+  &-inner {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+
+    &-1 {
+      color: $textColorLight;
+      background: white;
+    }
+
+    &-2 {
+      color: $textColorLight;
+      background: $bgColor2;
+    }
+
+    &-4 {
+      color: $textColorLight;
+      background: $bgColor4;
+    }
+
+    &-8 {
+      background: $bgColor8;
+    }
+
+    &-16 {
+      background: $bgColor16;
+    }
+
+    &-32 {
+      background: $bgColor32;
+    }
+
+    &-64 {
+      background: $bgColor64;
+    }
+
+    &-128 {
+      background: $bgColor128;
+    }
+
+    &-256 {
+      background: $bgColor256;
+    }
+
+    &-512 {
+      background: $bgColor512;
+    }
+
+    &-1024 {
+      background: $bgColor1024;
+      font-size: 30px;
+    }
+
+    &-2048 {
+      background: $bgColor2048;
+      font-size: 30px;
+    }
+
+    &-super {
+      background: $bgColorSuper;
+      font-size: 25px;
+    }
+  }
+}
+
+// For some reason I can't the vertical centering of the numbers to look
+// correct so I'm resorting to this hack:
+.tile-inner-value {
+  position: relative;
+  top: 2px;
+}
