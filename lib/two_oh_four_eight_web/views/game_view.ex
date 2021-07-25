@@ -11,10 +11,17 @@ defmodule TwoOhFourEightWeb.GameView do
     end
   end
 
-  def tile_inner_html_class(value, {x,y}, %Game{newest_tile: {newX, newY}}) do
+  def tile_inner_html_class(
+    value,
+    {x,y},
+    %Game{newest_tile: {newX, newY}, obstacle_coords: obstacle_coords}
+  ) do
     val_class =
       case value do
-        n when n < 0 -> "tile-inner-obstacle obstacle-#{abs(n)}"
+        -1 ->
+          # Give the obstacle a unique identifier so we can style it uniquely
+          obstacle_id = Enum.find_index(obstacle_coords, & &1 == {x,y}) + 1
+          "tile-inner-obstacle obstacle-#{obstacle_id}"
         n when n > 2048 -> "tile-inner-super"
         n -> "tile-inner-#{n}"
       end

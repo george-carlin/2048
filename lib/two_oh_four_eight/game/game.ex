@@ -4,16 +4,29 @@ defmodule TwoOhFourEight.Game.Game do
     grid: nil,
     status: :in_play,
     newest_tile: {-1, -1},
-    obstacles: 0
+    obstacle_coords: []
   ]
 
   alias TwoOhFourEight.Game.Grid
 
   def new() do
-    {grid, newest_tile} = Grid.new(obstacles: 4) |> Grid.add_tile(2)
+    num_obstacles = 4
+    {grid, newest_tile} = Grid.new(obstacles: num_obstacles) |> Grid.add_tile(2)
+
+    obstacle_coords =
+      for {row, y} <- Enum.with_index(grid) do
+        for {val, x} <- Enum.with_index(row) do
+          {val, {x,y}}
+        end
+      end
+      |> List.flatten()
+      |> Enum.filter(fn {val, _coord} -> val == -1 end)
+      |> Enum.map(fn {_val, coord} -> coord end)
+
     %__MODULE__{
       grid: grid,
-      newest_tile: newest_tile
+      newest_tile: newest_tile,
+      obstacle_coords: obstacle_coords
     }
   end
 
