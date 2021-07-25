@@ -33,6 +33,11 @@ $textColorVLight: #f9f6f2;
 $textColorLight: #776e65;
 $textColorDark: #f9f6f2;
 
+@keyframes zoomIn {
+  from { transform: scale(0,0) };
+  to { transform: scale(1,1) };
+}
+
 .tile {
   height: 80px;
   width: 80px;
@@ -52,6 +57,11 @@ $textColorDark: #f9f6f2;
     justify-content: center;
     border-radius: 3px;
     box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+
+    &-newest {
+      animation-name: zoomIn;
+      animation-duration: 0.2s;
+    }
 
     &-1 {
       color: $textColorLight;

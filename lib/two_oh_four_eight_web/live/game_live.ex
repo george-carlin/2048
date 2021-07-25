@@ -6,6 +6,11 @@ defmodule TwoOhFourEightWeb.GameLive do
   alias TwoOhFourEight.Game.Game
 
   @impl true
+  def render(assigns) do
+    TwoOhFourEightWeb.GameView.render("live.html", assigns)
+  end
+
+  @impl true
   def mount(_params, _session, socket) do
     game = Game.new()
     {:ok, assign(socket, game: game)}

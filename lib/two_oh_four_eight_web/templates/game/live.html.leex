@@ -1,18 +1,14 @@
 <div class="status">
-  <%= case @game.status do
-    :game_over -> "Game over!"
-    :won -> "You win!"
-    _ -> ""
-  end %>
+  <%= status(@game) %>
 </div>
 
 <div class="grid" phx-window-keydown="keydown" >
   <div class="grid-body">
-    <%= for row <- @game.grid do %>
+    <%= for {row, y} <- Enum.with_index(@game.grid) do %>
       <div class="grid-row">
-        <%= for value <- row do %>
+        <%= for {value, x} <- Enum.with_index(row) do %>
           <div class="tile">
-            <div class="tile-inner tile-inner-<%= if value <= 2048, do: value, else: "super" %>">
+            <div class="<%= tile_inner_html_class(value, {x,y}, @game) %>">
               <span class="tile-inner-value">
                 <%= if value > 0, do: value, else: "" %>
               </span>
