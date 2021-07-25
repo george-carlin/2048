@@ -1,6 +1,8 @@
 defmodule TwoOhFourEight.Game.Grid do
   @size 6
 
+  alias TwoOhFourEight.Game.Grid.Row
+
   # Empty squares have value 0. Obstacles have value -1
 
   def new(opts \\ []) do
@@ -84,7 +86,7 @@ defmodule TwoOhFourEight.Game.Grid do
   end
 
   def move(grid, :left) do
-    Enum.map(grid, &move_row/1)
+    Enum.map(grid, &Row.shift_left/1)
   end
 
   def move(grid, :right) do
@@ -107,45 +109,6 @@ defmodule TwoOhFourEight.Game.Grid do
     |> move(:right)
     |> transpose()
 	end
-
-  defp move_row(row) do
-    row
-    |> compact_row()
-    |> merge_row()
-    |> compact_row()
-  end
-
-  # Shift all tiles to the left without merging
-  defp compact_row(row) do
-    compacted = for tile <- row, tile > 0, do: tile
-    compacted ++ zeroes(length(row) - length(compacted))
-  end
-
-  defp zeroes(num) do
-    Stream.cycle([0]) |> Enum.take(num)
-  end
-
-  defp merge_row(row), do: merge_row(row, [], 0)
-
-  defp merge_row([], acc, tiles_moved) do
-    Enum.reverse(acc) ++ zeroes(tiles_moved)
-  end
-
-  defp merge_row([val, val | tail], acc, tiles_moved) do
-    merge_row(
-      tail,
-      [val*2 | acc],
-      tiles_moved + 1
-    )
-  end
-
-  defp merge_row([val | tail], acc, tiles_moved) do
-    merge_row(
-      tail,
-      [val | acc],
-      tiles_moved
-    )
-  end
 
   # Taken from https://rosettacode.org/wiki/Matrix_transposition#Elixir
   defp transpose(matrix) do
