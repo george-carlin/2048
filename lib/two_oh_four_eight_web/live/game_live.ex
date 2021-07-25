@@ -3,6 +3,8 @@ defmodule TwoOhFourEightWeb.GameLive do
 
   @arrow_keys ~w[ArrowUp ArrowDown ArrowLeft ArrowRight]
 
+  @topic "game"
+
   alias TwoOhFourEight.Game.Game
   alias TwoOhFourEight.Game.Server
 
@@ -13,8 +15,9 @@ defmodule TwoOhFourEightWeb.GameLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    game = Server.get_game()
-    {:ok, assign(socket, game: game)}
+    if connected?(socket), do: Phoenix.PubSub.subscribe(TwoOhFourEight.PubSub, @topic)
+
+    {:ok, assign(socket, game: Server.get_game())}
   end
 
   @impl true
@@ -33,6 +36,8 @@ defmodule TwoOhFourEightWeb.GameLive do
 
     game = Server.move(direction)
 
+    Phoenix.PubSub.broadcast(TwoOhFourEight.PubSub, @topic, :refresh)
+
     {:noreply, assign(socket, game: game)}
   end
 
@@ -40,4 +45,9 @@ defmodule TwoOhFourEightWeb.GameLive do
   def handle_event("keydown", %{"key" => _key}, socket), do: {:noreply, socket}
   # ^TODO how can I prevent the FE from sending irrelevant keys anyway? The
   # phx-key attr lets me limit it to 1 key but not >1
+
+  @impl true
+  def handle_info(:refresh, socket) do
+    {:noreply, assign(socket, game: Server.get_game())}
+  end
 end
