@@ -30,7 +30,7 @@ defmodule TwoOhFourEightWeb.GameLive do
       "ArrowLeft" -> :left
     end
 
-    game = Game.shift(socket.assigns.game, direction)
+    game = Game.move(socket.assigns.game, direction)
 
     {:noreply, assign(socket, game: game)}
   end

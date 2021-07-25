@@ -11,15 +11,15 @@ defmodule TwoOhFourEight.Game.Game do
     }
   end
 
-  def shift(game, direction) when direction in [:up, :down, :left, :right] do
+  def move(game, direction) when direction in [:up, :down, :left, :right] do
     {new_grid, newTileCoords} =
       game.grid
-      |> Grid.shift(direction)
+      |> Grid.move(direction)
       |> add_tile_if_changed(game.grid)
 
     new_status = cond do
       Grid.won?(new_grid, game.target) -> :won
-      !Grid.can_shift?(new_grid) -> :game_over
+      !Grid.can_move?(new_grid) -> :game_over
       true -> :in_play
     end
 
@@ -32,5 +32,5 @@ defmodule TwoOhFourEight.Game.Game do
 
   defp add_tile_if_changed(grid, grid), do: {grid, {-1,-1}}
 
-  defp add_tile_if_changed(shifted, _original), do: Grid.add_tile(shifted, 1)
+  defp add_tile_if_changed(moved, _original), do: Grid.add_tile(moved, 1)
 end

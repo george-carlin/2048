@@ -23,14 +23,14 @@ defmodule TwoOhFourEight.Game.Grid do
   end
 
   @doc """
-    iex> Grid.can_shift?([[1,0],[0,0]])
+    iex> Grid.can_move?([[1,0],[0,0]])
     true
-    iex> Grid.can_shift?([[1,2],[3,4]])
+    iex> Grid.can_move?([[1,2],[3,4]])
     false
   """
-  def can_shift?(grid) do
+  def can_move?(grid) do
     Enum.any?([:up, :down, :left, :right], fn dir ->
-      shift(grid, dir) != grid
+      move(grid, dir) != grid
     end)
   end
 
@@ -89,32 +89,32 @@ defmodule TwoOhFourEight.Game.Grid do
     List.replace_at(grid, y, new_row)
   end
 
-  def shift(grid, :left) do
-    Enum.map(grid, &shift_row/1)
+  def move(grid, :left) do
+    Enum.map(grid, &move_row/1)
   end
 
-  def shift(grid, :right) do
+  def move(grid, :right) do
     grid
     |> flip()
-    |> shift(:left)
+    |> move(:left)
     |> flip()
   end
 
-	def shift(grid, :up) do
+	def move(grid, :up) do
     grid
     |> transpose()
-    |> shift(:left)
+    |> move(:left)
     |> transpose()
 	end
 
-	def shift(grid, :down) do
+	def move(grid, :down) do
     grid
     |> transpose()
-    |> shift(:right)
+    |> move(:right)
     |> transpose()
 	end
 
-  defp shift_row(row) do
+  defp move_row(row) do
     row
     |> compact_row()
     |> merge_row()

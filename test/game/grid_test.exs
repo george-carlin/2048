@@ -35,9 +35,9 @@ defmodule TwoOhFourEight.Game.GridTest do
     end
   end
 
-  describe "shift/2" do
+  describe "move/2" do
     test "left" do
-      assert Grid.shift([
+      assert Grid.move([
         [0,0,0,0,0,0],
         [1,0,0,0,0,0],
         [2,4,8,16,32,1],
@@ -53,7 +53,7 @@ defmodule TwoOhFourEight.Game.GridTest do
         [1,4,2,0,0,0]
       ]
 
-      assert Grid.shift([
+      assert Grid.move([
         [32,32,4,4,1,2],
         [0,2,2,0,0,0],
         [2,2,2,1,1,1],
@@ -71,7 +71,7 @@ defmodule TwoOhFourEight.Game.GridTest do
     end
 
     test "right" do
-      assert Grid.shift([
+      assert Grid.move([
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1],
         [1, 32, 16, 8, 4, 2],
@@ -87,7 +87,7 @@ defmodule TwoOhFourEight.Game.GridTest do
         [0, 0, 0, 2, 4, 1]
       ]
 
-      assert Grid.shift([
+      assert Grid.move([
         [2, 1, 4, 4, 32, 32],
         [0, 0, 0, 2, 2, 0],
         [1, 1, 1, 2, 2, 2],
@@ -106,7 +106,7 @@ defmodule TwoOhFourEight.Game.GridTest do
     end
 
     test "up" do
-      assert Grid.shift([
+      assert Grid.move([
         [0, 1, 2, 1, 32, 1],
         [0, 0, 4, 0, 2, 2],
         [0, 0, 8, 2, 0, 2],
@@ -122,7 +122,7 @@ defmodule TwoOhFourEight.Game.GridTest do
         [0, 0, 1, 0, 0, 0]
       ]
 
-      assert Grid.shift([
+      assert Grid.move([
         [32, 0, 2, 2, 0, 1],
         [32, 2, 2, 2, 2, 2],
         [4, 2, 2, 2, 0, 0],
@@ -140,7 +140,7 @@ defmodule TwoOhFourEight.Game.GridTest do
     end
 
     test "down" do
-      assert Grid.shift([
+      assert Grid.move([
         [0, 0, 1, 1, 1, 1],
         [0, 0, 32, 0, 0, 1],
         [0, 0, 16, 0, 4, 0],
@@ -156,7 +156,7 @@ defmodule TwoOhFourEight.Game.GridTest do
         [0, 1, 2, 1, 32, 1]
       ]
 
-      assert Grid.shift([
+      assert Grid.move([
         [2, 0, 1, 2, 2, 2],
         [1, 0, 1, 2, 0, 0],
         [4, 0, 1, 2, 2, 2],
