@@ -5,9 +5,9 @@ defmodule TwoOhFourEight.Game.GridTest do
 
   doctest Grid
 
-  describe "add_random/2" do
+  describe "add_tile/2" do
     test "adds a random value to an empty tile" do
-      result = Grid.add_random([
+      {result, _} = Grid.add_tile([
         [0,0,0,0,0,0],
         [0,0,0,0,0,0],
         [0,0,0,0,0,0],
@@ -23,14 +23,15 @@ defmodule TwoOhFourEight.Game.GridTest do
 
       assert number_of_twos.(result) == 1
 
-      result = Grid.add_random(result, 2)
+      {result,_ } = Grid.add_tile(result, 2)
       assert number_of_twos.(result) == 2
 
-      result = Grid.add_random(result, 2)
+      {result, _} = Grid.add_tile(result, 2)
       assert number_of_twos.(result) == 3
 
       # Only one possible tile:
-      assert Grid.add_random([[1,0], [2,1]], 1) == [[1,1], [2,1]]
+      {result, _} = Grid.add_tile([[1,0], [2,1]], 1)
+      assert result == [[1,1], [2,1]]
     end
   end
 
