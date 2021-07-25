@@ -1,16 +1,11 @@
 defmodule TwoOhFourEightWeb.PageLive do
   use TwoOhFourEightWeb, :live_view
 
+  alias TwoOhFourEightWeb.Game.Grid
+
   @impl true
   def mount(_params, _session, socket) do
-    grid = [    
-      [1,2,4,8,16,32],
-      [64,128,256,512,1024,2048],
-      [4096,8192,0,0,0,0],
-      [0,0,0,0,0,0],
-      [0,0,0,0,0,0],
-      [0,0,0,0,0,0]
-    ]
+    grid = Grid.new() |> Grid.add_random(2)
     {:ok, assign(socket, grid: grid)}
   end
 
