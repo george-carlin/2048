@@ -50,4 +50,77 @@ defmodule TwoOhFourEight.Game.Grid do
     new_row = Enum.at(grid, y) |> List.replace_at(x, value)
     List.replace_at(grid, y, new_row)
   end
+  
+  def shift(grid, :left) do
+    Enum.map(grid, &shift_row/1)
+  end
+
+  def shift(grid, :right) do
+    grid
+    |> flip()
+    |> shift(:left)
+    |> flip()
+  end
+
+	def shift(grid, :up) do
+    grid
+    |> transpose()
+    |> shift(:left)
+    |> transpose()
+	end
+
+	def shift(grid, :down) do
+    grid
+    |> transpose()
+    |> shift(:right)
+    |> transpose()
+	end
+
+  defp shift_row(row) do
+    row
+    |> compact_row()
+    |> merge_row()
+    |> compact_row()
+  end
+
+  # Shift all tiles to the left without merging
+  defp compact_row(row) do
+    compacted = for tile <- row, tile > 0, do: tile 
+    compacted ++ zeroes(@size - length(compacted))
+  end
+
+  defp zeroes(num) do
+    Stream.cycle([0]) |> Enum.take(num)
+  end
+
+  defp merge_row(row), do: merge_row(row, [], 0)
+
+  defp merge_row([], acc, tiles_moved) do
+    Enum.reverse(acc) ++ zeroes(tiles_moved)
+  end
+
+  defp merge_row([val, val | tail], acc, tiles_moved) do
+    merge_row(
+      tail,
+      [val*2 | acc],
+      tiles_moved + 1
+    )
+  end
+
+  defp merge_row([val | tail], acc, tiles_moved) do
+    merge_row(
+      tail,
+      [val | acc],
+      tiles_moved
+    )
+  end
+
+  # Taken from https://rosettacode.org/wiki/Matrix_transposition#Elixir
+  defp transpose(matrix) do
+    List.zip(matrix) |> Enum.map(&Tuple.to_list(&1))
+  end
+
+  defp flip(matrix) do
+    for row <- matrix, do: Enum.reverse(row)
+  end
 end
