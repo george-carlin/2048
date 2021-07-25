@@ -4,6 +4,7 @@ defmodule TwoOhFourEightWeb.GameLive do
   @arrow_keys ~w[ArrowUp ArrowDown ArrowLeft ArrowRight]
 
   alias TwoOhFourEight.Game.Game
+  alias TwoOhFourEight.Game.Server
 
   @impl true
   def render(assigns) do
@@ -12,7 +13,7 @@ defmodule TwoOhFourEightWeb.GameLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    game = Game.new()
+    game = Server.get_game()
     {:ok, assign(socket, game: game)}
   end
 
@@ -30,7 +31,7 @@ defmodule TwoOhFourEightWeb.GameLive do
       "ArrowLeft" -> :left
     end
 
-    game = Game.move(socket.assigns.game, direction)
+    game = Server.move(direction)
 
     {:noreply, assign(socket, game: game)}
   end

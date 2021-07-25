@@ -12,10 +12,13 @@ defmodule TwoOhFourEight.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: TwoOhFourEight.PubSub},
       # Start the Endpoint (http/https)
-      TwoOhFourEightWeb.Endpoint
+      TwoOhFourEightWeb.Endpoint,
       # Start a worker by calling: TwoOhFourEight.Worker.start_link(arg)
       # {TwoOhFourEight.Worker, arg}
+      TwoOhFourEight.Game.Server
     ]
+
+    :ets.new(:current_game, [:public, :named_table])
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
