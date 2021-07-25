@@ -1,18 +1,18 @@
 defmodule TwoOhFourEightWeb.PageLive do
   use TwoOhFourEightWeb, :live_view
 
-  alias TwoOhFourEightWeb.Game.Grid
+  alias TwoOhFourEight.Game.Grid
 
   @impl true
   def mount(_params, _session, socket) do
     grid = Grid.new() |> Grid.add_random(2)
-    {:ok, assign(socket, grid: grid)}
+    {:ok, assign(socket, grid: grid, key: "")}
   end
 
-  #@impl true
-  #def handle_event("suggest", %{"q" => query}, socket) do
-  #  {:noreply, assign(socket, results: search(query), query: query)}
-  #end
+  @impl true
+  def handle_event("keydown", %{"key" => key}, socket) do
+    {:noreply, assign(socket, key: key)}
+  end
 
   #@impl true
   #def handle_event("search", %{"q" => query}, socket) do
