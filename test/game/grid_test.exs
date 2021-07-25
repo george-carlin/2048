@@ -5,6 +5,22 @@ defmodule TwoOhFourEight.Game.GridTest do
 
   doctest Grid
 
+  describe "new/1" do
+    test "creates a grid with N random obstacles" do
+      result = Grid.new()
+      assert result |> List.flatten() |> Enum.all?(& &1 == 0)
+
+      result = Grid.new(obstacles: 3)
+      num_obstacles =
+        Enum.map(result, fn row ->
+          Enum.count(row, & &1 == -1)
+        end)
+        |> Enum.sum()
+
+      assert num_obstacles == 3
+    end
+  end
+
   describe "add_tile/2" do
     test "adds a random value to an empty tile" do
       {result, _} = Grid.add_tile([

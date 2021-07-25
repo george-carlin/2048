@@ -14,10 +14,21 @@ defmodule TwoOhFourEight.Game.Grid do
         [0,0,0,0,0,0]
       ]
   """
-  def new do
-    for _ <- 1..@size do
-      for _ <- 1..@size do
-        0
+  def new(opts \\ []) do
+    num_obstacles = Keyword.get(opts, :obstacles, 0)
+
+    obstacle_coords =
+      0..(@size-1)
+      |> Enum.take_random(num_obstacles)
+      |> Enum.map(fn n -> {div(n, @size), rem(n, @size)} end)
+
+    for y <- 0..(@size-1) do
+      for x <- 0..(@size-1) do
+        if {x,y} in obstacle_coords do
+          -1
+        else
+          0
+        end
       end
     end
   end
