@@ -13,7 +13,7 @@ defmodule TwoOhFourEight.Game.GridTest do
       result = Grid.new(obstacles: 3)
       num_obstacles =
         Enum.map(result, fn row ->
-          Enum.count(row, & &1 == -1)
+          Enum.count(row, & &1 < 0)
         end)
         |> Enum.sum()
 
