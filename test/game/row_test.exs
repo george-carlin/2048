@@ -5,30 +5,6 @@ defmodule TwoOhFourEight.Game.RowTest do
 
   doctest Row
 
-  describe "split/1" do
-    test "splits row into chunks" do
-      assert Row.split([]) == [[]]
-
-      assert Row.split([1]) == [[1]]
-
-      assert Row.split([-1]) == [[],[]]
-
-      assert Row.split([0,0,0,0]) == [[0,0,0,0]]
-
-      assert Row.split([0,-1,0,0]) == [[0], [0,0]]
-
-      assert Row.split([-1,4,-1,2,0]) == [[], [4], [2,0]]
-
-      assert Row.split([-1,4,-1,2,0,-1]) == [[], [4], [2,0], []]
-
-      assert Row.split([-1,-1,-1,-1]) == [[],[],[],[],[]]
-
-      assert Row.split([2,-1,4,8,-1]) == [[2], [4,8], []]
-
-      assert Row.split([0,0,0,0,-1]) == [[0,0,0,0], []]
-    end
-  end
-
   describe "shift" do
     test "no obstacles, no merging" do
       assert Row.shift([]) == []

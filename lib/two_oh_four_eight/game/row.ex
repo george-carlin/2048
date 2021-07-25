@@ -53,7 +53,7 @@ defmodule TwoOhFourEight.Game.Row do
     |> List.flatten()
   end
 
-  def split(row) do
+  defp split(row) do
     row
     |> Enum.reverse()
     |> split([[]])
