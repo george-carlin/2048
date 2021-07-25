@@ -27,6 +27,11 @@ defmodule TwoOhFourEightWeb.GameLive do
     {:noreply, assign(socket, grid: grid)}
   end
 
+  @impl true
+  def handle_event("keydown", %{"key" => _key}, socket), do: {:noreply, socket}
+  # ^TODO how can I prevent the FE from sending irrelevant keys anyway? The
+  # phx-key attr lets me limit it to 1 key but not >1
+
   #@impl true
   #def handle_event("search", %{"q" => query}, socket) do
   #  case search(query) do
