@@ -53,9 +53,10 @@ defmodule TwoOhFourEight.Game.Grid do
     insert_at(grid, {x, y}, value)
   end
 
+  # NB this will loop infinitely if the grid has no empty squares
   defp find_empty_square(grid) do
-    x = :random.uniform(length(grid) - 1)
-    y = :random.uniform(length(grid) - 1)
+    x = :random.uniform(length(grid)) - 1
+    y = :random.uniform(length(grid)) - 1
     if (grid |> Enum.at(y) |> Enum.at(x)) == 0 do
       {x, y}
     else
