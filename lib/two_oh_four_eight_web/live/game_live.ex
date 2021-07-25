@@ -22,6 +22,8 @@ defmodule TwoOhFourEightWeb.GameLive do
 
   @impl true
   def handle_event("new_game", _, socket) do
+    Server.new_game()
+    broadcast_refresh!()
     {:noreply, assign(socket, game: Game.new())}
   end
 
@@ -36,7 +38,7 @@ defmodule TwoOhFourEightWeb.GameLive do
 
     game = Server.move(direction)
 
-    Phoenix.PubSub.broadcast(TwoOhFourEight.PubSub, @topic, :refresh)
+    broadcast_refresh!()
 
     {:noreply, assign(socket, game: game)}
   end
@@ -49,5 +51,9 @@ defmodule TwoOhFourEightWeb.GameLive do
   @impl true
   def handle_info(:refresh, socket) do
     {:noreply, assign(socket, game: Server.get_game())}
+  end
+
+  defp broadcast_refresh! do
+    Phoenix.PubSub.broadcast(TwoOhFourEight.PubSub, @topic, :refresh)
   end
 end
