@@ -1,4 +1,4 @@
-defmodule TwoOhFourEightWeb.PageLive do
+defmodule TwoOhFourEightWeb.GameLive do
   use TwoOhFourEightWeb, :live_view
 
   @arrow_keys ~w[ArrowUp ArrowDown ArrowLeft ArrowRight]

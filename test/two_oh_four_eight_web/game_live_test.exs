@@ -1,4 +1,4 @@
-defmodule TwoOhFourEightWeb.PageLiveTest do
+defmodule TwoOhFourEightWeb.GameLiveTest do
   use TwoOhFourEightWeb.ConnCase
 
   import Phoenix.LiveViewTest
