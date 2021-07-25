@@ -1,7 +1,7 @@
-defmodule TwoOhFourEight.Game.RowTest do
+defmodule TwoOhFourEight.Game.Grid.RowTest do
   use ExUnit.Case, async: true
 
-  alias TwoOhFourEight.Game.Row
+  alias TwoOhFourEight.Game.Grid.Row
 
   doctest Row
 

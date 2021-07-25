@@ -1,4 +1,4 @@
-defmodule TwoOhFourEight.Game.Row do
+defmodule TwoOhFourEight.Game.Grid.Row do
   # A chunk is an obstacle-free section of row.
   defmodule Chunk do
     def shift(chunk) do
