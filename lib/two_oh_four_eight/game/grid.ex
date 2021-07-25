@@ -54,10 +54,7 @@ defmodule TwoOhFourEight.Game.Grid do
       [] ->
         {grid, nil}
       coords ->
-        {x, y} = Enum.at(
-          coords,
-          :random.uniform(length(coords)) - 1
-        )
+        {x, y} = Enum.random(coords)
         new_grid = insert_at(grid, {x, y}, value)
         {new_grid, {x,y}}
     end
