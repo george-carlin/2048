@@ -1,6 +1,14 @@
+<div class="status">
+  <%= case @game.status do
+    :game_over -> "Game over!"
+    :won -> "You win!"
+    _ -> ""
+  end %>
+</div>
+
 <div class="grid" phx-window-keydown="keydown" >
   <div class="grid-body">
-    <%= for row <- @grid do %>
+    <%= for row <- @game.grid do %>
       <div class="grid-row">
         <%= for value <- row do %>
           <div class="tile">

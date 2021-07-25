@@ -87,6 +87,7 @@ defmodule TwoOhFourEight.Game.Grid do
   end
 
   def shift(grid, :left) do
+    IO.puts("shifting left")
     Enum.map(grid, &shift_row/1)
   end
 

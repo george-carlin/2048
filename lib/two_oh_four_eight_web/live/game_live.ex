@@ -3,16 +3,17 @@ defmodule TwoOhFourEightWeb.GameLive do
 
   @arrow_keys ~w[ArrowUp ArrowDown ArrowLeft ArrowRight]
 
-  alias TwoOhFourEight.Game.Grid
+  alias TwoOhFourEight.Game.Game
 
   @impl true
   def mount(_params, _session, socket) do
-    grid = Grid.new() |> Grid.add_random(2)
-    {:ok, assign(socket, grid: grid)}
+    game = Game.new()
+    {:ok, assign(socket, game: game)}
   end
 
   @impl true
   def handle_event("keydown", %{"key" => key}, socket) when key in @arrow_keys do
+    IO.puts("handling event")
     direction = case key do
       "ArrowUp" -> :up
       "ArrowDown" -> :down
@@ -20,11 +21,9 @@ defmodule TwoOhFourEightWeb.GameLive do
       "ArrowLeft" -> :left
     end
 
-    grid = socket.assigns.grid
-           |> Grid.shift(direction)
-           |> Grid.add_random(1)
+    game = Game.shift(socket.assigns.game, direction)
 
-    {:noreply, assign(socket, grid: grid)}
+    {:noreply, assign(socket, game: game)}
   end
 
   @impl true
