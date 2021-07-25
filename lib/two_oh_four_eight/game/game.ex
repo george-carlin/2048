@@ -10,21 +10,15 @@ defmodule TwoOhFourEight.Game.Game do
   end
 
   def shift(game, direction) when direction in [:up, :down, :left, :right] do
-    IO.puts("shifting #{direction}")
-    new_grid = Grid.shift(game.grid, direction)
-
-    game_over = !Grid.can_shift?(new_grid)
+    new_grid =
+      game.grid
+      |> Grid.shift(direction)
+      |> add_random_if_different(game.grid)
 
     new_status = cond do
       Grid.won?(new_grid, game.target) -> :won
-      game_over -> :game_over
+      !Grid.can_shift?(new_grid) -> :game_over
       true -> :in_play
-    end
-
-    new_grid = if new_status == :game_over do
-      new_grid
-    else
-      Grid.add_random(new_grid, 1)
     end
 
     Map.merge(game, %{
@@ -32,4 +26,8 @@ defmodule TwoOhFourEight.Game.Game do
       status: new_status
     })
   end
+
+  defp add_random_if_different(grid, grid), do: grid
+
+  defp add_random_if_different(shifted, _original), do: Grid.add_random(shifted, 1)
 end

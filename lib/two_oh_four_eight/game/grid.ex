@@ -47,10 +47,11 @@ defmodule TwoOhFourEight.Game.Grid do
   end
 
   # Add a tile with value 'value' to a random empty cell.
-  # (Assumes an empty cell can be found.)
+  # Returns the grid unchanged if nothing can be added
   def add_random(grid, value) do
     case find_empty_squares(grid) do
-      [] -> nil # TODO handle error
+      [] ->
+        grid
       coords ->
         {x, y} = Enum.at(
           coords,
@@ -87,7 +88,6 @@ defmodule TwoOhFourEight.Game.Grid do
   end
 
   def shift(grid, :left) do
-    IO.puts("shifting left")
     Enum.map(grid, &shift_row/1)
   end
 
