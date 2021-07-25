@@ -17,8 +17,12 @@ defmodule TwoOhFourEightWeb.GameLive do
   end
 
   @impl true
+  def handle_event("new_game", _, socket) do
+    {:noreply, assign(socket, game: Game.new())}
+  end
+
+  @impl true
   def handle_event("keydown", %{"key" => key}, socket) when key in @arrow_keys do
-    IO.puts("handling event")
     direction = case key do
       "ArrowUp" -> :up
       "ArrowDown" -> :down

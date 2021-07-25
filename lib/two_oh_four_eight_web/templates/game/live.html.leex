@@ -2,6 +2,8 @@
   <%= status(@game) %>
 </div>
 
+<button phx-click="new_game">Start new game</button>
+
 <div class="grid" phx-window-keydown="keydown" >
   <div class="grid-body">
     <%= for {row, y} <- Enum.with_index(@game.grid) do %>
