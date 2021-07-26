@@ -1,1 +1,1 @@
-mix.deps.get && cd assets && npm install && cd .. && mix phx.server
+mix deps.get && cd assets && npm install && cd .. && mix phx.server
