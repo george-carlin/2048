@@ -21,8 +21,8 @@ defmodule TwoOhFourEightWeb.GameLive do
   end
 
   @impl true
-  def handle_event("new_game", _, socket) do
-    Server.new_game()
+  def handle_event("new_game", %{"num_obstacles" => num_obstacles}, socket) do
+    Server.new_game(num_obstacles: num_obstacles)
     broadcast_refresh!()
     {:noreply, assign(socket, game: Game.new())}
   end

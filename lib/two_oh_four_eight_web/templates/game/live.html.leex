@@ -2,7 +2,23 @@
   <%= status(@game) %>
 </div>
 
-<button phx-click="new_game">Start new game</button>
+<form class="new-game-form" phx-submit="new_game">
+  <input type="submit" id="new_game_form_submit" value="Start new game" />
+
+  <p>Number of obstacles:</p>
+
+  <%= for n <- 0..4 do %>
+    <label>
+      <input
+        type="radio"
+        name="num_obstacles"
+        value="<%= n %>"
+        <%= if n == 0, do: "checked" %>
+      />
+      <%= n %>
+    </label>
+  <% end %>
+</form>
 
 <div class="grid" phx-window-keydown="keydown" >
   <div class="grid-body">

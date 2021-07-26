@@ -9,8 +9,8 @@ defmodule TwoOhFourEight.Game.Game do
 
   alias TwoOhFourEight.Game.Grid
 
-  def new() do
-    num_obstacles = 4
+  def new(opts \\ []) do
+    num_obstacles = Keyword.get(opts, :num_obstacles, 0)
     {grid, newest_tile} = Grid.new(obstacles: num_obstacles) |> Grid.add_tile(2)
 
     obstacle_coords =

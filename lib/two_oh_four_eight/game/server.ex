@@ -12,8 +12,8 @@ defmodule TwoOhFourEight.Game.Server do
 
   # API
 
-  def new_game do
-    GenServer.call(__MODULE__, :new_game)
+  def new_game(opts \\ []) do
+    GenServer.call(__MODULE__, {:new_game, opts})
   end
 
   def get_game do
@@ -37,8 +37,9 @@ defmodule TwoOhFourEight.Game.Server do
     {:ok, game}
   end
 
-  def handle_call(:new_game, _from, _current_state) do
-    save_game_and_reply(Game.new())
+  def handle_call({:new_game, opts}, _from, _current_state) do
+    num_obstacles = Keyword.get(opts, :num_obstacles, "0") |> String.to_integer()
+    save_game_and_reply(Game.new(num_obstacles: num_obstacles))
   end
 
   def handle_call(:get_game, _from, current_game), do: save_game_and_reply(current_game)
